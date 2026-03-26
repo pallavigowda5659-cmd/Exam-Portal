@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Rate This Test - stuexam</title>
+
+<style>
+body{
+font-family: Arial;
+margin:0;
+background:#f2f2f2;
+}
+
+/* Header */
+.header{
+background:#6b7a8f;
+color:white;
+padding:15px;
+text-align:center;
+font-size:20px;
+font-weight:bold;
+}
+
+/* Rating Container */
+.rating-container{
+background:white;
+max-width:600px;
+margin:30px auto;
+padding:20px;
+border-radius:10px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.rating-title{
+text-align:center;
+color:#6b7a8f;
+font-size:24px;
+margin-bottom:10px;
+}
+
+.rating-subtitle{
+text-align:center;
+color:#666;
+font-size:14px;
+margin-bottom:30px;
+}
+
+/* Star Rating */
+.star-rating{
+text-align:center;
+margin-bottom:30px;
+}
+
+.star-rating input{
+display:none;
+}
+
+.star-rating label{
+font-size:40px;
+color:#ccc;
+cursor:pointer;
+margin:0 2px;
+transition:color 0.2s;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label{
+color:#b4d000;
+}
+
+/* Text Rating */
+.text-rating{
+margin-bottom:30px;
+}
+
+.text-rating label{
+display:block;
+font-weight:bold;
+color:#6b7a8f;
+margin-bottom:10px;
+}
+
+.text-rating textarea{
+width:100%;
+padding:12px;
+border:2px solid #ddd;
+border-radius:5px;
+font-family:Arial;
+font-size:14px;
+resize:vertical;
+min-height:100px;
+box-sizing: border-box;
+}
+
+.text-rating textarea:focus{
+outline:none;
+border-color:#6b7a8f;
+}
+
+/* Extra Questions with Stars */
+.extra-questions{
+margin-bottom:30px;
+border-top:1px solid #eee;
+padding-top:20px;
+}
+
+.question-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+padding:10px;
+background:#f9f9f9;
+border-radius:5px;
+}
+
+.question-row label{
+font-weight:bold;
+color:#6b7a8f;
+font-size:14px;
+}
+
+.star-small{
+display:flex;
+flex-direction:row-reverse;
+justify-content:flex-end;
+}
+
+.star-small input{
+display:none;
+}
+
+.star-small label{
+font-size:20px;
+color:#ccc;
+cursor:pointer;
+transition:color 0.2s;
+margin:0 1px;
+}
+
+.star-small label:hover,
+.star-small label:hover ~ label,
+.star-small input:checked ~ label{
+color:#b4d000;
+}
+
+/* Submit Button */
+.submit-rating{
+text-align:center;
+}
+
+.submit-rating button{
+padding:15px 40px;
+background:#b4d000;
+color:black;
+border:none;
+border-radius:5px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+transition:background 0.2s;
+}
+
+.submit-rating button:hover{
+background:#9ab800;
+}
+
+.btn-thankyou {
+  background: linear-gradient(135deg, #6b7a8f, #8a9ab0);
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(107,122,143,0.4);
+  padding: 15px 40px !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
+  border: none !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  margin-top: 20px !important;
+  width: 250px !important;
+}
+
+.btn-thankyou:hover {
+  background: linear-gradient(135deg, #5a6978, #7a8a9f) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(107,122,143,0.6) !important;
+}
+
+/* Thank You Message */
+.thank-you{
+display:none;
+text-align:center;
+padding:40px;
+}
+
+.thank-you h2{
+color:#6b7a8f;
+font-size:28px;
+margin-bottom:15px;
+}
+
+.thank-you p{
+color:#666;
+font-size:16px;
+}
+
+.star-display{
+font-size:50px;
+color:#b4d000;
+margin:20px 0;
+}
+</style>
+
+<script>
+function updateStars(value) {
+var stars = document.querySelectorAll('.star-rating input');
+stars.forEach(function(star) {
+star.checked = (star.value === value);
+});
+calculateAverage();
+}
+
+function calculateAverage() {
+var total = 0;
+var count = 0;
+
+var smallStarGroups = document.querySelectorAll('.star-small');
+smallStarGroups.forEach(function(group) {
+var checked = group.querySelector('input:checked');
+if(checked) {
+total += parseInt(checked.value);
+count++;
+}
+});
+
+var avg = count > 0 ? Math.round(total / count) : 0;
+
+var topStars = document.querySelectorAll('.star-rating input');
+topStars.forEach(function(star) {
+star.checked = (parseInt(star.value) === avg);
+});
+}
+
+function updateTopStars(value, groupName) {
+calculateAverage();
+}
+
+function submitRating() {
+var stars = document.querySelectorAll('.star-rating input:checked');
+if(stars.length === 0){
+alert('Please select a star rating!');
+return;
+}
+
+document.querySelector('.rating-form').style.display = 'none';
+document.querySelector('.thank-you').style.display = 'block';
+
+var selectedStars = stars[0].value;
+var displayStars = '';
+for(var i=0; i<selectedStars; i++){
+displayStars += '★';
+}
+document.getElementById('selected-stars').textContent = displayStars;
+
+
+}
+</script>
+
+</head>
+
+<body>
+
+<div class="header">
+Staff Selection Commission (Government of India)
+</div>
+
+<div class="rating-container">
+
+<div class="rating-form">
+
+<div class="rating-title">
+Rate This Test
+</div>
+
+<div class="rating-subtitle">
+Your feedback helps us improve our testing platform
+</div>
+
+<!-- Star Rating -->
+<div class="star-rating">
+<input type="radio" id="star5" name="rating" value="5" onchange="updateStars('5')">
+<label for="star5" title="Excellent">★</label>
+<input type="radio" id="star4" name="rating" value="4" onchange="updateStars('4')">
+<label for="star4" title="Very Good">★</label>
+<input type="radio" id="star3" name="rating" value="3" onchange="updateStars('3')">
+<label for="star3" title="Good">★</label>
+<input type="radio" id="star2" name="rating" value="2" onchange="updateStars('2')">
+<label for="star2" title="Fair">★</label>
+<input type="radio" id="star1" name="rating" value="1" onchange="updateStars('1')">
+<label for="star1" title="Poor">★</label>
+</div>
+
+<!-- Extra Rating Questions -->
+<div class="extra-questions">
+<div class="question-row">
+<label>Question Difficulty Level:</label>
+<div class="star-small">
+<input type="radio" id="diff5" name="difficulty" value="5" onchange="updateTopStars('5', 'difficulty')"><label for="diff5">★</label>
+<input type="radio" id="diff4" name="difficulty" value="4" onchange="updateTopStars('4', 'difficulty')"><label for="diff4">★</label>
+<input type="radio" id="diff3" name="difficulty" value="3" onchange="updateTopStars('3', 'difficulty')"><label for="diff3">★</label>
+<input type="radio" id="diff2" name="difficulty" value="2" onchange="updateTopStars('2', 'difficulty')"><label for="diff2">★</label>
+<input type="radio" id="diff1" name="difficulty" value="1" onchange="updateTopStars('1', 'difficulty')"><label for="diff1">★</label>
+</div>
+</div>
+
+<div class="question-row">
+<label>Time Allotted Sufficient:</label>
+<div class="star-small">
+<input type="radio" id="time5" name="time" value="5" onchange="updateTopStars('5', 'time')"><label for="time5">★</label>
+<input type="radio" id="time4" name="time" value="4" onchange="updateTopStars('4', 'time')"><label for="time4">★</label>
+<input type="radio" id="time3" name="time" value="3" onchange="updateTopStars('3', 'time')"><label for="time3">★</label>
+<input type="radio" id="time2" name="time" value="2" onchange="updateTopStars('2', 'time')"><label for="time2">★</label>
+<input type="radio" id="time1" name="time" value="1" onchange="updateTopStars('1', 'time')"><label for="time1">★</label>
+</div>
+</div>
+
+<div class="question-row">
+<label>Questions Quality:</label>
+<div class="star-small">
+<input type="radio" id="qual5" name="quality" value="5" onchange="updateTopStars('5', 'quality')"><label for="qual5">★</label>
+<input type="radio" id="qual4" name="quality" value="4" onchange="updateTopStars('4', 'quality')"><label for="qual4">★</label>
+<input type="radio" id="qual3" name="quality" value="3" onchange="updateTopStars('3', 'quality')"><label for="qual3">★</label>
+<input type="radio" id="qual2" name="quality" value="2" onchange="updateTopStars('2', 'quality')"><label for="qual2">★</label>
+<input type="radio" id="qual1" name="quality" value="1" onchange="updateTopStars('1', 'quality')"><label for="qual1">★</label>
+</div>
+</div>
+
+<div class="question-row">
+<label>Overall Experience:</label>
+<div class="star-small">
+<input type="radio" id="over5" name="overall" value="5" onchange="updateTopStars('5', 'overall')"><label for="over5">★</label>
+<input type="radio" id="over4" name="overall" value="4" onchange="updateTopStars('4', 'overall')"><label for="over4">★</label>
+<input type="radio" id="over3" name="overall" value="3" onchange="updateTopStars('3', 'overall')"><label for="over3">★</label>
+<input type="radio" id="over2" name="overall" value="2" onchange="updateTopStars('2', 'overall')"><label for="over2">★</label>
+<input type="radio" id="over1" name="overall" value="1" onchange="updateTopStars('1', 'overall')"><label for="over1">★</label>
+</div>
+</div>
+</div>
+
+<!-- Text Rating -->
+<div class="text-rating">
+<label>Write Your Feedback:</label>
+<textarea placeholder="Tell us what you liked or what we can improve..."></textarea>
+</div>
+
+<!-- Submit Button -->
+<div class="submit-rating">
+<button onclick="submitRating()">Submit Rating</button>
+</div>
+
+</div>
+
+<!-- Thank You Message -->
+<div class="thank-you">
+<h2>Thank You!</h2>
+<div class="star-display" id="selected-stars"></div>
+<p>Your feedback has been submitted successfully.</p>
+<p>We appreciate your time and input!</p>
+<button class="btn-thankyou" onclick="window.location.href='result.html'">View Results</button>
+</div>
+
+</div>
+
+</body>
+</html>

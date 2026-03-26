@@ -1,0 +1,43 @@
+body{
+font-family: Arial;
+background: linear-gradient(135deg,#4facfe,#00f2fe);
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.login-box, .profile-box{
+background:white;
+padding:40px;
+width:350px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 0 10px gray;
+}
+
+.logo{
+width:80px;
+margin-bottom:10px;
+}
+
+.student-photo{
+width:120px;
+border-radius:50%;
+margin-bottom:10px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin:8px 0;
+}
+
+button{
+padding:10px 20px;
+background:#007bff;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}

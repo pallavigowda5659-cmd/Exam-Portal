@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Exam Will Start Soon</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background:#f3f5f9;
+margin:0;
+padding:0;
+}
+
+.timer{
+position:absolute;
+top:20px;
+right:30px;
+background:#333;
+color:white;
+padding:10px 20px;
+border-radius:8px;
+font-size:16px;
+}
+
+.container{
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.box{
+background:white;
+width:500px;
+padding:40px;
+text-align:center;
+border-radius:10px;
+box-shadow:0px 0px 10px rgba(0,0,0,0.2);
+}
+
+.start{
+color:green;
+font-size:22px;
+margin-top:10px;
+}
+
+.countdown{
+font-size:40px;
+font-weight:bold;
+margin:20px 0;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="timer">
+Time Remaining: <span id="timer"></span>
+</div>
+
+<div class="container">
+<div class="box">
+
+<h1>Exam Will Start Soon</h1>
+
+<div class="start">Exam will start at 9:00 AM</div>
+
+<div class="countdown" id="mainTimer"></div>
+
+<p>Please wait until the exam begins.</p>
+
+</div>
+</div>
+
+<script>
+
+var targetTime = new Date();
+targetTime.setHours(9);
+targetTime.setMinutes(0);
+targetTime.setSeconds(0);
+
+setInterval(function(){
+
+var now = new Date().getTime();
+var distance = targetTime - now;
+
+var hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+var minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+var seconds = Math.floor((distance % (1000*60))/1000);
+
+var time = hours+"h "+minutes+"m "+seconds+"s";
+
+document.getElementById("timer").innerHTML=time;
+document.getElementById("mainTimer").innerHTML=time;
+
+},1000);
+
+</script>
+
+</body>
+</html>
